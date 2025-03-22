@@ -6,7 +6,6 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  // remove debug banner
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
