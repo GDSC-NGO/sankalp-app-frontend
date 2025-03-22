@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../components/custom_text_field.dart';
-import '../components/custom_button.dart';
+import '../component/custom_text_field.dart'; // Updated path
+import '../component/custom_button.dart'; // Updated path
 import 'login_page.dart';
 
 class RegistrationPage extends StatefulWidget {
