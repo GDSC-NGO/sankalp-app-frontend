@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sankalp/component/bottomnavbar.dart';
 import 'package:sankalp/component/ngocard.dart';
 import 'package:sankalp/component/homesearchbar.dart';
+import 'package:sankalp/component/custom_button.dart'; // Import CustomButton
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
@@ -65,6 +66,14 @@ class _MyHomePageState extends State<MyHomePage> {
                   ],
                 ),
               ),
+              // Add a login/register button at the bottom
+              CustomButton(
+                text: 'Login / Register',
+                onPressed: () {
+                  Navigator.pushReplacementNamed(context, '/login');
+                },
+              ),
+              const SizedBox(height: 16), // Add spacing below the button
             ],
           ),
         ),
