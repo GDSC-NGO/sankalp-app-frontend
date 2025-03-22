@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sankalp/component/bottomnavbar.dart';
 import 'package:sankalp/component/ngocard.dart';
+import 'package:sankalp/component/homesearchbar.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
@@ -39,24 +40,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               const SizedBox(height: 16),
               // Search bar
-              Container(
-                height: 50,
-                decoration: BoxDecoration(
-                  color: Colors.grey[200],
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Row(
-                  children: [
-                    const SizedBox(width: 12),
-                    Icon(Icons.search, color: Colors.grey[600]),
-                    const SizedBox(width: 8),
-                    Text(
-                      "Search for NGO's",
-                      style: TextStyle(color: Colors.grey[600], fontSize: 16),
-                    ),
-                  ],
-                ),
-              ),
+              HomeSearchBar(),
               const SizedBox(height: 24),
               // NGOs near you title
               const Text(
@@ -89,5 +73,3 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
-
-
