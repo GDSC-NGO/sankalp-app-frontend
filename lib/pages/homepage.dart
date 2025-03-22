@@ -17,9 +17,12 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[const Text('Welcome to Sankalp')],
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 600), // Limit width
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[const Text('Welcome to Sankalp')],
+          ),
         ),
       ),
     );

@@ -1,25 +1,22 @@
 import 'package:flutter/material.dart';
 import '../components/custom_text_field.dart';
 import '../components/custom_button.dart';
-import 'login_page.dart';
 
-class RegistrationPage extends StatefulWidget {
-  const RegistrationPage({Key? key}) : super(key: key);
+class LoginPage extends StatefulWidget {
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
-  State<RegistrationPage> createState() => _RegistrationPageState();
+  State<LoginPage> createState() => _LoginPageState();
 }
 
-class _RegistrationPageState extends State<RegistrationPage> {
+class _LoginPageState extends State<LoginPage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-  final _confirmPasswordController = TextEditingController();
 
   @override
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
-    _confirmPasswordController.dispose();
     super.dispose();
   }
 
@@ -38,7 +35,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 children: [
                   const SizedBox(height: 30),
                   const Text(
-                    'Create your account',
+                    'Login here',
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.w500,
@@ -64,15 +61,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     hintText: 'Password',
                     obscureText: true,
                   ),
-                  const SizedBox(height: 16),
-                  CustomTextField(
-                    controller: _confirmPasswordController,
-                    hintText: 'Confirm password',
-                    obscureText: true,
-                  ),
-                  const SizedBox(height: 32),
+                  const SizedBox(height: 24),
                   CustomButton(
-                    text: 'Sign up',
+                    text: 'Sign in',
                     onPressed: () {
                       Navigator.pushReplacementNamed(context, '/home'); // Ensure this matches the route
                     },
@@ -80,14 +71,11 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   const SizedBox(height: 16),
                   GestureDetector(
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const LoginPage()),
-                      );
+                      Navigator.pushNamed(context, '/register');
                     },
                     child: const Center(
                       child: Text(
-                        'Already have an account?',
+                        'Create a new account',
                         style: TextStyle(
                           color: Color(0xFF757575),
                           fontSize: 14,
