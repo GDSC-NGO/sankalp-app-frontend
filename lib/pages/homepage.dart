@@ -57,11 +57,11 @@ class _MyHomePageState extends State<MyHomePage> {
               Expanded(
                 child: ListView(
                   children: const [
-                    NGOCard(name: "Ngo name 1", rating: 4.0),
+                    NGOCard(name: "Baburao Foundation", rating: 4.0),
                     SizedBox(height: 16),
-                    NGOCard(name: "Ngo name 2", rating: 4.0),
+                    NGOCard(name: "Gadekar Community", rating: 4.0),
                     SizedBox(height: 16),
-                    NGOCard(name: "Ngo name 3", rating: 4.2),
+                    NGOCard(name: "Bapuli and Sons", rating: 4.2),
                     SizedBox(height: 16),
                   ],
                 ),

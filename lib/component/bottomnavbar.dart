@@ -6,7 +6,7 @@ class NavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 70, // Increased height
+      height: 86, // Increased height to fix the overflow
       decoration: const BoxDecoration(
         color: Color(
           0xFF616161,

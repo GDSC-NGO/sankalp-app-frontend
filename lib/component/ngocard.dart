@@ -4,8 +4,7 @@ class NGOCard extends StatelessWidget {
   final String name;
   final double rating;
 
-  const NGOCard({Key? key, required this.name, required this.rating})
-    : super(key: key);
+  const NGOCard({super.key, required this.name, required this.rating});
 
   @override
   Widget build(BuildContext context) {
