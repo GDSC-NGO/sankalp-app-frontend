@@ -3,7 +3,7 @@ import '../component/custom_text_field.dart'; // Updated path
 import '../component/custom_button.dart'; // Updated path
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  const LoginPage({super.key});
 
   @override
   State<LoginPage> createState() => _LoginPageState();

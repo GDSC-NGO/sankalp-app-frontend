@@ -4,7 +4,7 @@ import '../component/custom_button.dart'; // Updated path
 import 'login_page.dart';
 
 class RegistrationPage extends StatefulWidget {
-  const RegistrationPage({Key? key}) : super(key: key);
+  const RegistrationPage({super.key});
 
   @override
   State<RegistrationPage> createState() => _RegistrationPageState();
@@ -48,10 +48,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   const SizedBox(height: 8),
                   const Text(
                     'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Color(0xFFA0A0A0),
-                    ),
+                    style: TextStyle(fontSize: 14, color: Color(0xFFA0A0A0)),
                   ),
                   const SizedBox(height: 32),
                   CustomTextField(
@@ -74,7 +71,10 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   CustomButton(
                     text: 'Sign up',
                     onPressed: () {
-                      Navigator.pushReplacementNamed(context, '/home'); // Ensure this matches the route
+                      Navigator.pushReplacementNamed(
+                        context,
+                        '/home',
+                      ); // Ensure this matches the route
                     },
                   ),
                   const SizedBox(height: 16),
@@ -82,7 +82,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => const LoginPage()),
+                        MaterialPageRoute(
+                          builder: (context) => const LoginPage(),
+                        ),
                       );
                     },
                     child: const Center(

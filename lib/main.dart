@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'pages/homepage.dart';
-import 'pages/welcome_screen.dart';
 import 'pages/registration.dart';
 import 'pages/login_page.dart';
 
@@ -23,7 +22,7 @@ void main() async {
 class MyApp extends StatelessWidget {
   final bool isFirstLaunch;
 
-  const MyApp({Key? key, required this.isFirstLaunch}) : super(key: key);
+  const MyApp({super.key, required this.isFirstLaunch});
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +32,9 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const MyHomePage(title: 'Sankalp'),  // Ensuring `homepage.dart` works properly
+      home: const MyHomePage(
+        title: 'Sankalp',
+      ), // Ensuring `homepage.dart` works properly
       routes: {
         '/home': (context) => const MyHomePage(title: 'Sankalp'),
         '/login': (context) => const LoginPage(),
