@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 class NGOCard extends StatelessWidget {
   final String name;
-  final double rating;
+  final String location;
 
-  const NGOCard({super.key, required this.name, required this.rating});
+  const NGOCard({super.key, required this.name, required this.location});
 
   @override
   Widget build(BuildContext context) {
@@ -12,6 +12,7 @@ class NGOCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.grey[200],
         borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: Colors.black, width: 1.5),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -54,30 +55,6 @@ class NGOCard extends StatelessWidget {
                         color: Colors.grey[300],
                         borderRadius: BorderRadius.circular(12),
                       ),
-                      child: Row(
-                        children: [
-                          Text(
-                            rating.toString(),
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14,
-                            ),
-                          ),
-                          const SizedBox(width: 4),
-                          Row(
-                            children: List.generate(
-                              5,
-                              (index) => Icon(
-                                index < rating.floor()
-                                    ? Icons.star
-                                    : Icons.star_border,
-                                color: Colors.amber,
-                                size: 16,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
                     ),
                   ],
                 ),
@@ -88,7 +65,7 @@ class NGOCard extends StatelessWidget {
                     Icon(Icons.location_on, size: 16, color: Colors.grey[600]),
                     const SizedBox(width: 4),
                     Text(
-                      'location',
+                      location,
                       style: TextStyle(fontSize: 14, color: Colors.grey[600]),
                     ),
                   ],
