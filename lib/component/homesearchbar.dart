@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
+
 import '../backend/repositories/ngo_repository.dart';
 
 class HomeSearchBar extends StatelessWidget {
   final Function(String)? onSearch;
 
-  const HomeSearchBar({
-    super.key,
-    this.onSearch,
-  });
+  const HomeSearchBar({super.key, this.onSearch});
 
   @override
   Widget build(BuildContext context) {
-    final TextEditingController _searchController = TextEditingController();
-    final NGORepository _ngoRepository = NGORepository();
+    final TextEditingController searchController = TextEditingController();
+    final NGORepository _ = NGORepository();
 
     return Container(
       height: 55,
@@ -22,7 +20,7 @@ class HomeSearchBar extends StatelessWidget {
         borderRadius: BorderRadius.circular(25),
       ),
       child: TextField(
-        controller: _searchController,
+        controller: searchController,
         decoration: const InputDecoration(
           hintText: "Search for NGO's",
           hintStyle: TextStyle(color: Color(0xFFA0A0A0), fontSize: 18),

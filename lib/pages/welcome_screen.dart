@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'homepage.dart';
-import 'registration.dart';
-import 'login_page.dart'; // Import login page
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
@@ -53,7 +50,8 @@ class WelcomeScreen extends StatelessWidget {
                           width: double.infinity,
                           height: 50,
                           decoration: BoxDecoration(
-                            color: const Color(0xFF39AC9E), // Updated to match your theme color
+                            color: const Color(0xFF39AC9E),
+                            // Updated to match your theme color
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Row(
@@ -116,10 +114,7 @@ class WelcomeScreen extends StatelessWidget {
                       child: Text(
                         'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
                         textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Colors.grey,
-                          fontSize: 12,
-                        ),
+                        style: TextStyle(color: Colors.grey, fontSize: 12),
                       ),
                     ),
 

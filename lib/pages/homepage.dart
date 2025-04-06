@@ -1,14 +1,17 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sankalp/component/bottomnavbar.dart';
-import 'package:sankalp/component/ngocard.dart';
 import 'package:sankalp/component/homesearchbar.dart';
-import '../backend/services/auth_service.dart';
-import '../backend/repositories/ngo_repository.dart';
+import 'package:sankalp/component/ngocard.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 import '../backend/models/ngo.dart';
+import '../backend/repositories/ngo_repository.dart';
+import '../backend/services/auth_service.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
+
   final String title;
 
   @override
@@ -64,7 +67,9 @@ class _MyHomePageState extends State<MyHomePage> {
         });
       }
     } catch (e) {
-      print('Error loading NGOs: $e');
+      if (kDebugMode) {
+        print('Error loading NGOs: $e');
+      }
       if (mounted) {
         setState(() {
           _isLoading = false;
@@ -94,7 +99,9 @@ class _MyHomePageState extends State<MyHomePage> {
         });
       }
     } catch (e) {
-      print('Error searching NGOs: $e');
+      if (kDebugMode) {
+        print('Error searching NGOs: $e');
+      }
       if (mounted) {
         setState(() {
           _isLoading = false;
@@ -147,22 +154,28 @@ class _MyHomePageState extends State<MyHomePage> {
                           ),
                         ),
                         _isLoggedIn
-                          ? PopupMenuButton(
+                            ? PopupMenuButton(
                               child: CircleAvatar(
                                 backgroundColor: Colors.white.withOpacity(0.9),
                                 radius: 20,
-                                child: const Icon(Icons.person, color: Color(0xFF39AC9E)),
+                                child: const Icon(
+                                  Icons.person,
+                                  color: Color(0xFF39AC9E),
+                                ),
                               ),
-                              itemBuilder: (BuildContext context) => [
-                                PopupMenuItem(
-                                  value: 'profile',
-                                  child: Text('Profile${_username != null ? ' ($_username)' : ''}'),
-                                ),
-                                const PopupMenuItem(
-                                  value: 'logout',
-                                  child: Text('Logout'),
-                                ),
-                              ],
+                              itemBuilder:
+                                  (BuildContext context) => [
+                                    PopupMenuItem(
+                                      value: 'profile',
+                                      child: Text(
+                                        'Profile${_username != null ? ' ($_username)' : ''}',
+                                      ),
+                                    ),
+                                    const PopupMenuItem(
+                                      value: 'logout',
+                                      child: Text('Logout'),
+                                    ),
+                                  ],
                               onSelected: (value) {
                                 if (value == 'profile') {
                                   // Navigate to profile page (implement this later)
@@ -171,22 +184,23 @@ class _MyHomePageState extends State<MyHomePage> {
                                 }
                               },
                             )
-                          : InkWell(
+                            : InkWell(
                               onTap: () {
                                 Navigator.pushNamed(context, '/login');
                               },
                               child: CircleAvatar(
                                 backgroundColor: Colors.white.withOpacity(0.9),
                                 radius: 20,
-                                child: const Icon(Icons.login, color: Color(0xFF39AC9E)),
+                                child: const Icon(
+                                  Icons.login,
+                                  color: Color(0xFF39AC9E),
+                                ),
                               ),
                             ),
                       ],
                     ),
                     const SizedBox(height: 16),
-                    HomeSearchBar(
-                      onSearch: _searchNgos,
-                    ),
+                    HomeSearchBar(onSearch: _searchNgos),
                     const SizedBox(height: 16),
                   ],
                 ),
@@ -195,117 +209,132 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           // Rest of the content
           Expanded(
-            child: _isLoading
-                ? const Center(child: CircularProgressIndicator(color: Color(0xFF39AC9E)))
-                : Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const SizedBox(height: 24),
-                        // NGOs title with search results if applicable
-                        Text(
-                          _searchQuery.isNotEmpty
-                              ? "Search results for '$_searchQuery'"
-                              : "NGO's near you",
-                          style: const TextStyle(
-                            fontSize: 22,
-                            fontWeight: FontWeight.w500,
-                            color: Color(0xFF4A4A4A),
-                          ),
-                        ),
-                        const SizedBox(height: 8),
-                        // Search result count if applicable
-                        if (_searchQuery.isNotEmpty)
+            child:
+                _isLoading
+                    ? const Center(
+                      child: CircularProgressIndicator(
+                        color: Color(0xFF39AC9E),
+                      ),
+                    )
+                    : Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(height: 24),
+                          // NGOs title with search results if applicable
                           Text(
-                            "${_ngos.length} result${_ngos.length != 1 ? 's' : ''} found",
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: Colors.grey[600],
+                            _searchQuery.isNotEmpty
+                                ? "Search results for '$_searchQuery'"
+                                : "NGO's near you",
+                            style: const TextStyle(
+                              fontSize: 22,
+                              fontWeight: FontWeight.w500,
+                              color: Color(0xFF4A4A4A),
                             ),
                           ),
-                        const SizedBox(height: 16),
-                        // NGO listing (scrollable)
-                        Expanded(
-                          child: _ngos.isEmpty
-                              ? Center(
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      const Icon(
-                                        Icons.search_off,
-                                        size: 64,
-                                        color: Color(0xFFCCCCCC),
+                          const SizedBox(height: 8),
+                          // Search result count if applicable
+                          if (_searchQuery.isNotEmpty)
+                            Text(
+                              "${_ngos.length} result${_ngos.length != 1 ? 's' : ''} found",
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.grey[600],
+                              ),
+                            ),
+                          const SizedBox(height: 16),
+                          // NGO listing (scrollable)
+                          Expanded(
+                            child:
+                                _ngos.isEmpty
+                                    ? Center(
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          const Icon(
+                                            Icons.search_off,
+                                            size: 64,
+                                            color: Color(0xFFCCCCCC),
+                                          ),
+                                          const SizedBox(height: 16),
+                                          Text(
+                                            _searchQuery.isNotEmpty
+                                                ? 'No NGOs found for "$_searchQuery"'
+                                                : 'No NGOs available',
+                                            style: const TextStyle(
+                                              color: Color(0xFF757575),
+                                              fontSize: 16,
+                                            ),
+                                          ),
+                                          if (_searchQuery.isNotEmpty) ...[
+                                            const SizedBox(height: 24),
+                                            TextButton(
+                                              onPressed: () {
+                                                setState(() {
+                                                  _searchQuery = '';
+                                                });
+                                                _loadNgos();
+                                              },
+                                              child: const Text(
+                                                'Show all NGOs',
+                                              ),
+                                            ),
+                                          ],
+                                        ],
                                       ),
-                                      const SizedBox(height: 16),
-                                      Text(
-                                        _searchQuery.isNotEmpty
-                                            ? 'No NGOs found for "$_searchQuery"'
-                                            : 'No NGOs available',
-                                        style: const TextStyle(
-                                          color: Color(0xFF757575),
-                                          fontSize: 16,
-                                        ),
-                                      ),
-                                      if (_searchQuery.isNotEmpty) ...[
-                                        const SizedBox(height: 24),
-                                        TextButton(
-                                          onPressed: () {
-                                            setState(() {
-                                              _searchQuery = '';
-                                            });
-                                            _loadNgos();
-                                          },
-                                          child: const Text('Show all NGOs'),
-                                        ),
-                                      ],
-                                    ],
+                                    )
+                                    : ListView.builder(
+                                      itemCount: _ngos.length,
+                                      itemBuilder: (context, index) {
+                                        final ngo = _ngos[index];
+                                        return Padding(
+                                          padding: const EdgeInsets.only(
+                                            bottom: 16.0,
+                                          ),
+                                          child: NGOCard(
+                                            name: ngo.ngoName,
+                                            location:
+                                                ngo.location ??
+                                                'Location not specified',
+                                          ),
+                                        );
+                                      },
+                                    ),
+                          ),
+                          // Show login button at bottom if not logged in
+                          if (!_isLoggedIn) ...[
+                            const SizedBox(height: 16),
+                            InkWell(
+                              onTap: () {
+                                Navigator.pushNamed(context, '/login');
+                              },
+                              child: Container(
+                                width: double.infinity,
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 12,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: const Color(0xFF39AC9E),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                alignment: Alignment.center,
+                                child: const Text(
+                                  'Login / Register',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500,
                                   ),
-                                )
-                              : ListView.builder(
-                                  itemCount: _ngos.length,
-                                  itemBuilder: (context, index) {
-                                    final ngo = _ngos[index];
-                                    return Padding(
-                                      padding: const EdgeInsets.only(bottom: 16.0),
-                                      child: NGOCard(
-                                        name: ngo.ngoName,
-                                        location: ngo.location ?? 'Location not specified',
-                                      ),
-                                    );
-                                  },
-                                ),
-                        ),
-                        // Show login button at bottom if not logged in
-                        if (!_isLoggedIn) ...[
-                          const SizedBox(height: 16),
-                          InkWell(
-                            onTap: () {
-                              Navigator.pushNamed(context, '/login');
-                            },
-                            child: Container(
-                              width: double.infinity,
-                              padding: const EdgeInsets.symmetric(vertical: 12),
-                              decoration: BoxDecoration(
-                                color: const Color(0xFF39AC9E),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              alignment: Alignment.center,
-                              child: const Text(
-                                'Login / Register',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w500,
                                 ),
                               ),
                             ),
-                          ),
-                          const SizedBox(height: 16),
+                            const SizedBox(height: 16),
+                          ],
                         ],
-                      ],
+                      ),
                     ),
-                  ),
           ),
         ],
       ),
