@@ -1,8 +1,10 @@
+import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../repositories/user_repository.dart';
-import '../repositories/ngo_repository.dart';
-import '../models/user.dart';
+
 import '../models/ngo.dart';
+import '../models/user.dart';
+import '../repositories/ngo_repository.dart';
+import '../repositories/user_repository.dart';
 
 class AuthService {
   final UserRepository _userRepository = UserRepository();
@@ -53,7 +55,9 @@ class AuthService {
   }) async {
     try {
       // Check if username or email already exists
-      final usernameExists = await _userRepository.checkUsernameExists(username);
+      final usernameExists = await _userRepository.checkUsernameExists(
+        username,
+      );
       if (usernameExists) {
         throw Exception('Username already exists');
       }
@@ -67,7 +71,8 @@ class AuthService {
       final user = User(
         username: username,
         email: email,
-        password: password, // In production, hash this password
+        password: password,
+        // In production, hash this password
         name: name,
         phone: phone,
         address: address,
@@ -97,7 +102,9 @@ class AuthService {
 
       return true;
     } catch (e) {
-      print('Registration error: $e');
+      if (kDebugMode) {
+        print('Registration error: $e');
+      }
       return false;
     }
   }
@@ -113,7 +120,9 @@ class AuthService {
 
       return false;
     } catch (e) {
-      print('Login error: $e');
+      if (kDebugMode) {
+        print('Login error: $e');
+      }
       return false;
     }
   }
