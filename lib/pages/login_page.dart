@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import '../component/custom_text_field.dart'; // Updated path
-import '../component/custom_button.dart'; // Updated path
+import '../component/custom_text_field.dart';
+import '../component/custom_button.dart';
+import '../backend/services/auth_service.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -10,14 +11,51 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final _emailController = TextEditingController();
+  final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _authService = AuthService();
+  bool _isLoading = false;
+  String? _errorMessage;
 
   @override
   void dispose() {
-    _emailController.dispose();
+    _usernameController.dispose();
     _passwordController.dispose();
     super.dispose();
+  }
+
+  Future<void> _signIn() async {
+    setState(() {
+      _isLoading = true;
+      _errorMessage = null;
+    });
+
+    try {
+      final success = await _authService.login(
+        _usernameController.text,
+        _passwordController.text,
+      );
+
+      if (success) {
+        if (mounted) {
+          Navigator.pushReplacementNamed(context, '/home');
+        }
+      } else {
+        setState(() {
+          _errorMessage = 'Invalid username or password';
+        });
+      }
+    } catch (e) {
+      setState(() {
+        _errorMessage = 'Login error: ${e.toString()}';
+      });
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
   }
 
   @override
@@ -44,7 +82,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   const SizedBox(height: 8),
                   const Text(
-                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+                    'Welcome back to Sankalp',
                     style: TextStyle(
                       fontSize: 14,
                       color: Color(0xFFA0A0A0),
@@ -52,8 +90,8 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   const SizedBox(height: 32),
                   CustomTextField(
-                    controller: _emailController,
-                    hintText: 'Enter your email',
+                    controller: _usernameController,
+                    hintText: 'Enter your username',
                   ),
                   const SizedBox(height: 16),
                   CustomTextField(
@@ -61,13 +99,22 @@ class _LoginPageState extends State<LoginPage> {
                     hintText: 'Password',
                     obscureText: true,
                   ),
+
+                  if (_errorMessage != null) ...[
+                    const SizedBox(height: 16),
+                    Text(
+                      _errorMessage!,
+                      style: const TextStyle(color: Colors.red),
+                    ),
+                  ],
+
                   const SizedBox(height: 24),
-                  CustomButton(
-                    text: 'Sign in',
-                    onPressed: () {
-                      Navigator.pushReplacementNamed(context, '/home'); // Ensure this matches the route
-                    },
-                  ),
+                  _isLoading
+                      ? const Center(child: CircularProgressIndicator())
+                      : CustomButton(
+                          text: 'Sign in',
+                          onPressed: _signIn,
+                        ),
                   const SizedBox(height: 16),
                   GestureDetector(
                     onTap: () {

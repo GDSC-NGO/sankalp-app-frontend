@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'homepage.dart';
-// Import the registration page
-import 'registration.dart'; // Corrected import
+import 'registration.dart';
+import 'login_page.dart'; // Import login page
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
@@ -13,11 +13,10 @@ class WelcomeScreen extends StatelessWidget {
       body: SafeArea(
         child: Center(
           child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 600), // Limit width
+            constraints: const BoxConstraints(maxWidth: 600),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                // Empty space at the top
                 const SizedBox(height: 40),
 
                 // Logo in the center
@@ -28,7 +27,7 @@ class WelcomeScreen extends StatelessWidget {
                       height: 150,
                       decoration: const BoxDecoration(
                         shape: BoxShape.circle,
-                        color: Color(0xFFE0E0E0), // Light gray background color
+                        color: Color(0xFFE0E0E0),
                       ),
                       child: ClipOval(
                         child: Image.asset(
@@ -40,28 +39,28 @@ class WelcomeScreen extends StatelessWidget {
                   ),
                 ),
 
-                // Bottom section with button and text
+                // Bottom section with buttons and text
                 Column(
                   children: [
-                    // Start Journey Button
+                    // Start Journey Button (Register)
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 30),
                       child: GestureDetector(
                         onTap: () {
-                          Navigator.pushReplacementNamed(context, '/register'); // Ensure this matches the route
+                          Navigator.pushReplacementNamed(context, '/register');
                         },
                         child: Container(
                           width: double.infinity,
                           height: 50,
                           decoration: BoxDecoration(
-                            color: const Color(0xFFB4B4B4), // Gray button color
-                            borderRadius: BorderRadius.circular(4),
+                            color: const Color(0xFF39AC9E), // Updated to match your theme color
+                            borderRadius: BorderRadius.circular(8),
                           ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: const [
                               Text(
-                                'Start your journey',
+                                'Create an account',
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 16,
@@ -76,6 +75,37 @@ class WelcomeScreen extends StatelessWidget {
                               ),
                             ],
                           ),
+                        ),
+                      ),
+                    ),
+
+                    // Added Login option
+                    const SizedBox(height: 16),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pushReplacementNamed(context, '/login');
+                      },
+                      child: const Text(
+                        'Already have an account? Login',
+                        style: TextStyle(
+                          color: Color(0xFF39AC9E),
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+
+                    // Skip to explore option
+                    const SizedBox(height: 16),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pushReplacementNamed(context, '/home');
+                      },
+                      child: const Text(
+                        'Skip to explore',
+                        style: TextStyle(
+                          color: Color(0xFF757575),
+                          fontSize: 14,
                         ),
                       ),
                     ),
